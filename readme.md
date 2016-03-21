@@ -205,7 +205,7 @@ view to see how we route to these actions.
 >Tagging is our model representing our joined table between Membership and Tags
 
 * `Cohort` and `User`, through `Membership`
->Membership is our model representing our joined table between User and Tags
+>Membership is our model representing our joined table between Cohort and User
 
 ## Closing
 
