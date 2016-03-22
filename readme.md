@@ -12,19 +12,25 @@
 
 [Screencast on Youtube](https://www.youtube.com/watch?v=JxW8lJzLhxI)
 
-### References
+## Framing: Review One-to-Many Relationships (5 min)
 
-* [Rails Guides - Has Many Through](http://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
-* [Tunr Playlists Starter](https://github.com/ga-dc/tunr_rails/tree/playlists-starter)
-* [Tunr Playlists Solution](https://github.com/ga-dc/tunr_rails/tree/playlists-solution)
+So far in Class we have been working with One to Many Relationships:
 
-## Many-to-Many Relationships
+* In Scribble, we had `Posts` and `Comments`.
+* During our Hogwarts Lab, we had `Houses` and `Students`
+* In Tunr, we had `Artists` and `Songs`
+
+However, using the Tunr as an example, what if we want to add `Playlists` to our application, where a `Playlist` can have many `Songs` and `Songs` can be in many `Playlists`?
+
+We need a way to represent this type of many to many relationship!
+
+## Many-to-Many Relationships (5 min)
 
 Many-to-many relationships are fairly common in apps. Examples might include:
 
 * posts have many categories, categories have many posts
 * groups have many photos, photos have many groups
-* playlists have many songs, songs can be in many playlists
+* users have many events, events can have many users
 
 Unlike 1-to-many relationships, we can't just add a foreign key to one of the
 two tables (the `belongs_to` table) to store these associations. We'd run into a
@@ -33,13 +39,15 @@ one id in a one-to-many relationship.
 
 Instead, we must create a new table, a *join table* to store these associations.
 
-## Join Tables
+## Join Tables & Models (5 min)
 
-A join table is a separate table in our DB whose job is to store information
+### Join Tables
+
+A `join table` is a separate table in our DB whose job is to store information
 about the relationship between our two models of the many-to-many. For each
 many-to-many relationship, we'll need one join table.
 
-At a minimum, each join table should have two foreign_key columns, for the tables
+At a minimum, each join table should have `two foreign_key columns`, for the tables
 it's joining. e.g. for PlaylistEntries, we should have a `song_id` column and
 a `playlist_id` column.
 
@@ -49,22 +57,36 @@ stores an integer representing what order that song appears on the playlist.
 (e.g. a song may be first on one playlist, but 10th on another... that info
 would be stored on the join table.)
 
-## Join Models & Tables
+### Join Models
 
 In rails, we should always create a model to represent our join table. The name
-can technically be anythign we want, but really the model name should be as
+can technically be anything we want, but really the model name should be as
 descriptive as possible, and indicate that it represents an *association*.
 
-Some examples:
-* To join users and events, we might create an `Attendance` model
-* To join users and courses, we might create an `Registration` model
-* To join photos to groups, we might have a `GroupMembership` model
+### Think/Pair/Share - 3/2 (5 min)
+
+Turn to your Neighbor and discuss the following for each example:
+
+1. Is this relationship a Many-to-Many or One-to-Many?
+2. If a Many-to-Many, what might we call the Join Model/Join Table?
+
+Examples:
+
+* Posts & Categories
+* Users & Courses
+* Events & Locations  
+* Photos and Groups
+
+>Many-to-Many Examples:
 * To join posts to categories, we might have a `CategoryEntry` or `Categorization` model
-* To join songs to playlists, we might have a `PlaylistEntry` model
+* To join users and courses, we might create an `Registration` model
+* To join photos to groups, we might have a `Membership` model
 
-### Generating the Model / Migration
+### Generating the Model / Migration (5 min)
 
-We generate the model just like any other. If we specify the attributes (i.e.
+We generate the model just like any other!
+
+If we specify the attributes (i.e.
 columns on the command line, Rails will automatically generate the correct
 migration for us.
 
@@ -75,12 +97,25 @@ $ rails g model Attendance user:references event:references num_guests:integer
 This will generate an Attendance model, with `user_id`, `event_id` and
 `num_guest` columns.
 
-### EXERCISE: Create the PlaylistEntry Model
+### You Do: Create the PlaylistEntry Model (10 min)
+
+Instructions:
+
+***Make sure to checkout the playlists-starter branch***
+
+1. Fork and Clone the Tunr Repo: [Tunr Playlists Starter](https://github.com/ga-dc/tunr_rails)
+2. `$ git checkout playlists-starter`
+3. `$ bundle install`
+4. `$ rake db:drop`
+5. `$ rake db:create`
+6. `$ rake db:migrate`
+7. `$ rake db:seed`
+
 
 Create a model / migration for the `PlaylistEntry` model. It should have `song_id`,
 `playlist_id`, and `order` columns.
 
-### Adding the AR Relationships
+### Adding the AR Relationships (5 min)
 
 Once we create our join model, we need to update our other models to indicate
 the associations between them.
@@ -107,12 +142,12 @@ class User < ActiveRecord::Base
 end
 ```
 
-### EXERCISE: Update our Models
+### You-Do Exercise: Update our Models (5 min)
 
 Update the Song, Playlist, and Playlist Entry models to ensure we have the
 correct associations.
 
-### Testing our Association
+### Testing our Association (5 min)
 
 It's a good idea to use the `rails console` to test creating our associations.
 
@@ -150,11 +185,34 @@ carly.events
 Attendance.find_by(user: bob, event: prom).destroy # will only destroy the first one that matches
 
 Attendance.where(user: bob, event: prom).destroy_all # will destroy all that match
-prom.attendances.where(user: bob).destry_all
+prom.attendances.where(user: bob).destroy_all
 ```
 
-### EXERCISE: Update Playlists Controller
+### You-Do Exercise: Update Playlists Controller (10 min)
 
-Update the `add_song` and `remove_song` actions in the playlists controller to
+We have already defined the Routes and Views to add and remove songs from a Playlist.
+
+Update the associated `add_song` and `remove_song` actions in the playlists controller to
 add and remove songs from the playlist. Look at the `playlists/show.html.erb`
 view to see how we route to these actions.
+
+### Garnet Example (5 min)
+
+[Garnet Many-to-Many Example](https://github.com/ga-dc/garnet/blob/master/app/models/tagging.rb)
+
+* `Membership` and `Tags`, through `Tagging`.
+>Tagging is our model representing our joined table between Membership and Tag
+
+* `Cohort` and `User`, through `Membership`
+>Membership is our model representing our joined table between Cohort and User
+
+## Closing
+
+### Additional Resources
+* [Andy's Blog Post](http://andrewsunglaekim.github.io/many-actives-to-many-records/)
+* [Rails Guides - Has Many Through](http://guides.rubyonrails.org/association_basics.html#the-has-many-through-association)
+
+### References
+
+* [Tunr Playlists Starter](https://github.com/ga-dc/tunr_rails/tree/playlists-starter)
+* [Tunr Playlists Solution](https://github.com/ga-dc/tunr_rails/tree/playlists-solution)
