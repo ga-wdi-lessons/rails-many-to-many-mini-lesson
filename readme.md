@@ -73,14 +73,12 @@ Turn to your Neighbor and discuss the following for each example:
 Examples:
 
 * Posts & Categories
-* Users & Events
 * Users & Courses
 * Events & Locations  
 * Photos and Groups
 
 >Many-to-Many Examples:
 * To join posts to categories, we might have a `CategoryEntry` or `Categorization` model
-* To join users and events, we might create an `Attendance` model
 * To join users and courses, we might create an `Registration` model
 * To join photos to groups, we might have a `Membership` model
 
