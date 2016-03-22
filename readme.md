@@ -20,7 +20,7 @@ So far in Class we have been working with One to Many Relationships:
 * During our Hogwarts Lab, we had `Houses` and `Students`
 * In Tunr, we had `Artists` and `Songs`
 
-However, using the Tunr as an example, let's consider that a lot of music is composed collaboratively and we may have songs that belong to **multiple Artists**.
+However, using the Tunr as an example, what if we want to add `Playlists` to our application, where a `Playlist` can have many `Songs` and `Songs` can be in many `Playlists`?
 
 We need a way to represent this type of many to many relationship!
 
@@ -30,7 +30,7 @@ Many-to-many relationships are fairly common in apps. Examples might include:
 
 * posts have many categories, categories have many posts
 * groups have many photos, photos have many groups
-* playlists have many songs, songs can be in many playlists
+* users have many events, events can have many users
 
 Unlike 1-to-many relationships, we can't just add a foreign key to one of the
 two tables (the `belongs_to` table) to store these associations. We'd run into a
@@ -72,6 +72,7 @@ Turn to your Neighbor and discuss the following for each example:
 
 Examples:
 
+* Posts & Categories
 * Users & Events
 * Users & Courses
 * Events & Locations  
@@ -79,10 +80,9 @@ Examples:
 
 >Many-to-Many Examples:
 * To join posts to categories, we might have a `CategoryEntry` or `Categorization` model
-* To join songs to playlists, we might have a `PlaylistEntry` model
 * To join users and events, we might create an `Attendance` model
 * To join users and courses, we might create an `Registration` model
-* To join photos to groups, we might have a `GroupMembership` model
+* To join photos to groups, we might have a `Membership` model
 
 ### Generating the Model / Migration (5 min)
 
@@ -99,11 +99,11 @@ $ rails g model Attendance user:references event:references num_guests:integer
 This will generate an Attendance model, with `user_id`, `event_id` and
 `num_guest` columns.
 
-### You Do: Create the PlaylistEntry Model (5 min)
+### You Do: Create the PlaylistEntry Model (10 min)
 
 Instructions:
 
-***Make sure to checkout the playlists-starter branch locally***
+***Make sure to checkout the playlists-starter branch***
 
 1. Fork and Clone the Tunr Repo:[Tunr Playlists Starter](https://github.com/ga-dc/tunr_rails)
 2. `$ git checkout playlists-starter`
@@ -111,6 +111,7 @@ Instructions:
 4. `$ rake db:drop`
 5. `$ rake db:create`
 6. `$ rake db:migrate`
+7. `$ rake db:seed`
 
 
 Create a model / migration for the `PlaylistEntry` model. It should have `song_id`,
@@ -202,10 +203,10 @@ view to see how we route to these actions.
 [Garnet Many-to-Many Example](https://github.com/ga-dc/garnet/blob/master/app/models/tagging.rb)
 
 * `Membership` and `Tags`, through `Tagging`.
->Tagging is our model representing our joined table between Membership and Tags
+>Tagging is our model representing our joined table between memberships and tags
 
 * `Cohort` and `User`, through `Membership`
->Membership is our model representing our joined table between User and Tags
+>Membership is our model representing our joined table between users and cohorts
 
 ## Closing
 
