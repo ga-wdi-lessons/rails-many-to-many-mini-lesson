@@ -113,7 +113,7 @@ We also want to reposition songs within the playlist.  Which one plays first?  W
 
 ***Make sure to checkout the playlists-starter branch***
 
-1. Fork and Clone the Tunr Repo: [Tunr Playlists Starter](https://github.com/ga-dc/tunr_rails)
+1. Fork and Clone the Tunr Repo: [Tunr Playlists Starter](https://github.com/ga-wdi-exercises/tunr_rails)
 2. `$ git checkout playlists-starter`
 3. `$ bundle install`
 4. `$ rake db:drop`
@@ -229,5 +229,5 @@ view to see how we route to these actions.
 
 ### References
 
-* [Tunr Playlists Starter](https://github.com/ga-dc/tunr_rails/tree/playlists-starter)
-* [Tunr Playlists Solution](https://github.com/ga-dc/tunr_rails/tree/playlists-solution)
+* [Tunr Playlists Starter](https://github.com/ga-wdi-exercises/tunr_rails/tree/playlists-starter)
+* [Tunr Playlists Solution](https://github.com/ga-wdi-exercises/tunr_rails/tree/playlists-solution)
