@@ -65,7 +65,9 @@ descriptive as possible, and indicate that it represents an *association*.
 
 ### Think/Pair/Share - 3/2 (5 min)
 
-Turn to your Neighbor and discuss the following for each example:
+#### Think (WhiteTable, 1 min):
+
+Action: For each example, draw an ERD and indicate your recommended relationship.  Be prepared to support your decision.
 
 1. Is this relationship a Many-to-Many or One-to-Many?
 2. If a Many-to-Many, what might we call the Join Model/Join Table?
@@ -77,10 +79,19 @@ Examples:
 * Events & Locations  
 * Photos and Groups
 
+#### Pair (2 min)
+
+Action: Turn to your Neighbor and discuss the following for each example:
+
+#### Share (3 min)
+
+Action: Instructor gathers answers from class.
+
 >Many-to-Many Examples:
 * To join posts to categories, we might have a `CategoryEntry` or `Categorization` model
 * To join users and courses, we might create an `Registration` model
 * To join photos to groups, we might have a `Membership` model
+
 
 ### Generating the Model / Migration (5 min)
 
