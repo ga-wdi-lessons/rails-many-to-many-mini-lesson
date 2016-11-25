@@ -97,13 +97,23 @@ $ rails g model Attendance user:references event:references num_guests:integer
 This will generate an Attendance model, with `user_id`, `event_id` and
 `num_guest` columns.
 
+### You Do: Turn and Talk (2/3 - 5 min)
+
+Q. What do we need to support playlists?
+---
+
+> A. Playlist has many Songs.  Songs belong to many playlists.  We need a many-to-many.  
+
+We'll call the join model a PlaylistEntry.  Each PlaylistEntry belongs to a Playlist and a Song.
+We also want to reposition songs within the playlist.  Which one plays first?  We'll represent this with an integer called "position".
+
 ### You Do: Create the PlaylistEntry Model (10 min)
 
-Instructions:
+#### Setup:
 
 ***Make sure to checkout the playlists-starter branch***
 
-1. Fork and Clone the Tunr Repo: [Tunr Playlists Starter](https://github.com/ga-dc/tunr_rails)
+1. Fork and Clone the Tunr Repo: [Tunr Playlists Starter](https://github.com/ga-wdi-exercises/tunr_rails)
 2. `$ git checkout playlists-starter`
 3. `$ bundle install`
 4. `$ rake db:drop`
@@ -111,9 +121,14 @@ Instructions:
 6. `$ rake db:migrate`
 7. `$ rake db:seed`
 
+#### Pre-existing Conditions:
+
+You are familiar with Songs.  You've been working with them all week.  This starter code supports them as you would expect.  This starter code also supports Playlists (see: "db/schema" and "app/models/playlist.rb").
+
+#### Your task:
 
 Create a model / migration for the `PlaylistEntry` model. It should have `song_id`,
-`playlist_id`, and `order` columns.
+`playlist_id`, and `position` columns.
 
 ### Adding the AR Relationships (5 min)
 
@@ -144,7 +159,7 @@ end
 
 ### You-Do Exercise: Update our Models (5 min)
 
-Update the Song, Playlist, and Playlist Entry models to ensure we have the
+Update the Song, Playlist, and PlaylistEntry models to ensure we have the
 correct associations.
 
 ### Testing our Association (5 min)
@@ -196,7 +211,7 @@ Update the associated `add_song` and `remove_song` actions in the playlists cont
 add and remove songs from the playlist. Look at the `playlists/show.html.erb`
 view to see how we route to these actions.
 
-### Garnet Example (5 min)
+### (Bonus) Garnet Example (5 min)
 
 [Garnet Many-to-Many Example](https://github.com/ga-dc/garnet/blob/master/app/models/tagging.rb)
 
@@ -214,5 +229,5 @@ view to see how we route to these actions.
 
 ### References
 
-* [Tunr Playlists Starter](https://github.com/ga-dc/tunr_rails/tree/playlists-starter)
-* [Tunr Playlists Solution](https://github.com/ga-dc/tunr_rails/tree/playlists-solution)
+* [Tunr Playlists Starter](https://github.com/ga-wdi-exercises/tunr_rails/tree/playlists-starter)
+* [Tunr Playlists Solution](https://github.com/ga-wdi-exercises/tunr_rails/tree/playlists-solution)
